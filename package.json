@@ -2,10 +2,15 @@
   "name": "bigmactest",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon server/server.js"
+    "start": "node server/server.js"
   },
   "author": "Elliot Cheung",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babelify": "^8.0.0",
+    "browserify-middleware": "^8.1.1",
+    "express": "^4.17.1",
+    "path": "^0.12.7",
     "react": "^16.13.1"
   }
 }
