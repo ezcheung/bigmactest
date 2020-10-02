@@ -1,0 +1,11 @@
+{
+  "name": "bigmactest",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "author": "Elliot Cheung",
+  "dependencies": {
+    "react": "^16.13.1"
+  }
+}
