@@ -46,8 +46,8 @@ let startListening = function() {
 	console.log("Listening on localhost:" + port);
 
 	process.on('SIGINT', function(){
-		console.log("Test!")
-	  	listener.close();
+		console.log("Shutting down");
+	  	listener.close(); //make sure to close port
 		process.exit(0);
 	});
 }
@@ -75,3 +75,24 @@ app.get('/countries',
 		res.send(countryIndex);
 		res.status(200).send();
 	})
+
+app.get('/myCountry', 
+	(req, res) => {
+		ip = req.ip == "::1" ? "" : req.ip
+
+		var options = {
+		    port : 443,
+		    method : 'GET',
+		    headers: {'User-Agent': 'request'}
+		};
+
+		return fetch(`https://ipvigilante.com/json/${ip}`,options)
+		.then((data) => data.json())
+		.then(data => {
+			res.send(data.data);
+		})
+		.catch(err => console.log("Error: ", err))
+	})
+
+
+
