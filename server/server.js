@@ -70,7 +70,7 @@ app.get('/bundle.js',
   })
 );
 
-app.get('/countries',
+app.get('/countryIndex',
 	(req, res) => {
 		res.send(countryIndex);
 		res.status(200).send();
