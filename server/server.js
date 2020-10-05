@@ -32,7 +32,7 @@ let parseIndexCSV = function(csv) {
 			index[country] = {'date':date} //initialize new country
 		}
 
-		for(let j = 2; j < row.length; j++) {
+		for(let j = 0; j < row.length; j++) {
 			index[country][keys[j]] = row[j]; //save values into index
 		}
 	}

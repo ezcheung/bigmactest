@@ -9,9 +9,11 @@ export default class App extends React.Component {
 		super(props);
 		this.state = {
 			loading : true,
-			country : null,
+			myCountry : null,
+			randCountry: null,
 			inMoney : 0,
-			index : null
+			index : null,
+			error : ""
 		}
 
 	}
@@ -19,18 +21,22 @@ export default class App extends React.Component {
 	//When component mounts, load country data and display
 	componentDidMount() {
 		getCountry().then(data => {
-			this.setState({country: data}) 
-			this.setState({loading: !this.fullyLoaded()})
+			this.state.myCountry = data; 
+			if(this.state.myCountry == this.state.randCountry) this.state.randomCountry = this.getRandomCountry();
+			this.state.loading = !this.fullyLoaded();
+			this.forceUpdate();
 		});
 		getIndex().then(data => {
-			this.setState({index: data})
-			this.setState({loading: !this.fullyLoaded()});
+			this.state.index = data;
+			this.state.randCountry=this.getRandomCountry();
+			this.state.loading = !this.fullyLoaded();
+			this.forceUpdate();
 		});
 	}
 
 	//Returns true if we're ready to display the page
 	fullyLoaded() {
-		return (this.state.country != null && this.state.index != null);
+		return (this.state.myCountry != null && this.state.randCountry != null && this.state.index != null);
 	}
 
 	moneyField() {
@@ -47,16 +53,33 @@ export default class App extends React.Component {
 	    </div>)
 	}
 
+	// Gets a random country out of the country index
+	getRandomCountry() {
+		if(this.state.index == null) return null; //index not retrieved yet
 
+		let countries = Object.keys(this.state.index);
+		if(countries.length <= 1) this.setState({error: "Big Mac data only contains one country"});
+
+		let rand = countries[Math.floor(Math.random()*countries.length)];
+		while(rand == this.state.myCountry) {
+			rand = countries[Math.floor(Math.random()*countries.length)];
+		}
+		return rand;
+	}
+
+	getCountryInfo(country) {
+		return this.state.index[country]
+	}
 
 	render() {
 		if(this.state.loading) {
 			return <LoadingComp/>;
 		}
 		return <div>
-					<h1>You are in {this.state.country}</h1>
+					<h1>You are in {this.state.myCountry}</h1>
 					{this.moneyField()}
-					<LocalInfo inMoney={this.state.inMoney} countryInfo={this.state.index[this.state.country]}/>
+					<LocalInfo inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)}/>
+					<LocalInfo inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)} randCountryInfo={this.getCountryInfo(this.state.randCountry)}/>
 			   </div>
 	}
 }
