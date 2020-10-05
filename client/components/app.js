@@ -10,38 +10,41 @@ export default class App extends React.Component {
 		this.state = {
 			loading : true,
 			country : null,
-			inMoney : 0
+			inMoney : 0,
+			index : null
 		}
 
-		this.index = null;
 	}
 
 	//When component mounts, load country data and display
 	componentDidMount() {
-		getCountry().then(data => {this.setState({country: data, loading: this.fullyLoaded()})});
+		getCountry().then(data => {
+			this.setState({country: data}) 
+			this.setState({loading: !this.fullyLoaded()})
+		});
 		getIndex().then(data => {
-			this.index = data;
-			console.log(this.index);
-			this.setState({loading: this.fullyLoaded()});
-		})
+			this.setState({index: data})
+			this.setState({loading: !this.fullyLoaded()});
+		});
 	}
 
+	//Returns true if we're ready to display the page
 	fullyLoaded() {
-		return (this.state.country != null && this.index != null);
+		return (this.state.country != null && this.state.index != null);
 	}
 
 	moneyField() {
-		return 
+		return (
 		<div>
-			<label>Please enter an amount of money in your local currency</label>
+			<label>Please enter an amount of money in your local currency: </label>
 			<input
 	          	defaultValue=""
 	            onChange={(e)=>{
 	              this.setState({inMoney:e.currentTarget.value});
 	            }
-	          }
+	        }
 	        />
-	    </div>
+	    </div>)
 	}
 
 
@@ -51,11 +54,9 @@ export default class App extends React.Component {
 			return <LoadingComp/>;
 		}
 		return <div>
-				<h1>{this.state.country}</h1>
-				{this.moneyField()}
-				<LocalInfo inMoney={this.state.inMoney} country={this.state.country}/>
-				<button onClick={() => this.increaseMoney()}>Test</button>
-				{this.state.inMoney}
+					<h1>You are in {this.state.country}</h1>
+					{this.moneyField()}
+					<LocalInfo inMoney={this.state.inMoney} countryInfo={this.state.index[this.state.country]}/>
 			   </div>
 	}
 }
