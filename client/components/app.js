@@ -29,7 +29,7 @@ export default class App extends React.Component {
 			this.forceUpdate();
 		})
 		.catch(err => {
-			this.setState({error: "An error occurred when fetching your country:" + err});
+			this.setState({error: "An error occurred when fetching your local country's information: " + err});
 		})
 
 		getIndex().then(data => {
@@ -50,9 +50,11 @@ export default class App extends React.Component {
 
 	moneyField() {
 		return (
-		<div>
+		<div id="moneyPanel" className="">
 			<label>Please enter an amount of money in your local currency: </label>
+			<br/>
 			<input
+				id="inputMoney"
 	          	defaultValue=""
 	            onChange={(e)=>{
 	              this.setState({inMoney:e.currentTarget.value});
@@ -88,8 +90,10 @@ export default class App extends React.Component {
 			return <LoadingComp/>;
 		}
 		return <div>
-					<h1>You are in {this.state.myCountry}</h1>
-					{this.moneyField()}
+					<div id="topThird" className="third">
+						<h1 id="hdrMyCountry">You are in {this.state.myCountry}</h1>
+						{this.moneyField()}
+					</div>
 					<CountryPanel inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)}/>
 					<CountryPanel inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)} randCountryInfo={this.getCountryInfo(this.state.randCountry)}/>
 			   </div>

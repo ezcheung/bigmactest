@@ -2,3 +2,57 @@ body{
   background-image: url('assets/food.png');
   font-family: 'Lato', sans-serif;
 }
+
+#moneyPanel{
+
+}
+
+#topThird {
+	margin-top: 20px;
+}
+
+#inputMoney {
+	margin-top:15px;
+	min-width:30%;
+	min-height:20px;
+}
+
+.countryInfo{
+
+}
+
+.third{
+	min-height: 30vh;
+	border: 2px solid black;
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+.third:hover{
+  box-shadow: 2px 2px #AAA;
+  transition: box-shadow 0.25s;
+}
+
+.infoText{
+	margin-top: 10px;
+}
+
+#error{
+	margin-top:3%;
+	border: 3px solid red;
+	background-color: rgb(255, 217, 217); 
+}
+
+#errMsg{
+	padding:10px;
+}
+
+#loading{
+	text-align: center;
+	margin-top: 3%;
+}

@@ -100,6 +100,9 @@ app.get('/countryIndex',
 
 app.get('/myCountry', 
 	(req, res) => {
+		//debug line if ipvigilante is down 
+		//res.send({data: "The United States", ok: true});
+
 		ip = req.ip == "::1" ? "" : req.ip
 
 		var options = {

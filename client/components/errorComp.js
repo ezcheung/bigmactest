@@ -9,9 +9,9 @@ export default class ErrorComp extends React.Component {
 	}
 
 	render() {
-		return <div id="error">
+		return <div id="error" className="third">
 				<h1>Error!</h1>
-				<div>{this.props.error}</div>
+				<div id="errMsg"><b>{this.props.error}</b></div>
 			   </div>
 	}
 }
