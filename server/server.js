@@ -103,7 +103,8 @@ app.get('/myCountry',
 		//debug line if ipvigilante is down 
 		//res.send({data: "The United States", ok: true});
 
-		ip = req.ip == "::1" ? "" : req.ip
+		// When running on localhost, ip will just be home - use server's home
+		ip = (req.ip.contains("127.0.0.1") || req.ip.contains("::1")) ? "" : req.ip
 
 		var options = {
 		    port : 443,
