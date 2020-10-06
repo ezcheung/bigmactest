@@ -1,13 +1,19 @@
 export function getCountry() {
 	return fetch('/myCountry')
-	.then(response => response.json())
-	.then(data => data.data)
-	.catch(err => console.log("Error: ", err))
+	.then(response => {
+		return response.json();
+	})
+	.then(data => {
+		if(!data.ok) {
+			throw new Error(data.error)
+		}
+		return data.data
+	})
 };
 
 export function getIndex() {
 	return fetch('/countryIndex')
 	.then(response => response.json())
 	.then(data => data)
-	.catch(err => console.log("Error: ", err))
+	.catch(err => err)
 }

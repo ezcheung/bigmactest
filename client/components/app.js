@@ -1,6 +1,7 @@
 import React from 'react';
 import LoadingComp from './loading.js';
 import CountryPanel from './countryPanel.js';
+import ErrorComp from './errorComp.js';
 import { getCountry, getIndex } from '../models/getCountryInfo.js';
 
 export default class App extends React.Component { 
@@ -20,17 +21,25 @@ export default class App extends React.Component {
 
 	//When component mounts, load country data and display
 	componentDidMount() {
-		getCountry().then(data => {
+		getCountry()
+		.then(data => {
 			this.state.myCountry = data; 
 			if(this.state.myCountry == this.state.randCountry) this.state.randomCountry = this.getRandomCountry();
 			this.state.loading = !this.fullyLoaded();
 			this.forceUpdate();
-		});
+		})
+		.catch(err => {
+			this.setState({error: "An error occurred when fetching your country:" + err});
+		})
+
 		getIndex().then(data => {
 			this.state.index = data;
 			this.state.randCountry=this.getRandomCountry();
 			this.state.loading = !this.fullyLoaded();
 			this.forceUpdate();
+		})
+		.catch(err => {
+			this.setState({error: "An error occurred when fetching the country table: " + err});
 		});
 	}
 
@@ -72,6 +81,9 @@ export default class App extends React.Component {
 	}
 
 	render() {
+		if(this.state.error != "") {
+			return <ErrorComp error={this.state.error}/>
+		}
 		if(this.state.loading) {
 			return <LoadingComp/>;
 		}

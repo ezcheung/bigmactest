@@ -112,9 +112,12 @@ app.get('/myCountry',
 		.then((data) => data.json())
 		.then(data => {
 			let countryName = addTheToCountry(data.data.country_name);
-			res.send({data: countryName});
+			res.send({data: countryName, ok: true});
 		})
-		.catch(err => console.log("Error: ", err))
+		.catch(err => {
+			console.log("Error: ", err.message);
+			res.status(500).send({error: err.message, ok: false});
+		})
 	})
 
 
