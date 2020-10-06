@@ -1,8 +1,8 @@
 import React from 'react';
 
-const currencyRegex = /\d*(.\d{0,2})?$/
+const currencyRegex = /^(\d*(.\d{0,2})?)$/
 
-export default class LocalInfo extends React.Component {
+export default class CountryPanel extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state= {
@@ -40,7 +40,7 @@ export default class LocalInfo extends React.Component {
 	}
 
 	dispNumMacs() {
-		if(this.props.inMoney == "") return (<div>Enter an amount of money to see how many Big Macs you could buy!</div>)
+		if(this.props.inMoney == "") return (<div>Enter an amount of money to see how many Big Macs you could buy in {this.props.randCountryInfo ? this.props.randCountryInfo.country : "your country!"}</div>)
 
 		if(isNaN(this.props.inMoney) || this.props.inMoney < 0 || !currencyRegex.test(this.props.inMoney)) {
 			return (<div>Please enter a valid amount of money</div>)
@@ -49,12 +49,12 @@ export default class LocalInfo extends React.Component {
 		let numMacs = this.getNumMacs();
 
 		if(!this.props.randCountryInfo) {
-			return (<div>You could buy {numMacs} Big Macs in your country</div>);
+			return (<div>You could buy {numMacs} Big {numMacs == 1 ? "Mac" : "Macs"} in your country</div>);
 		}
 		
 		return (
 			<div>
-				<div>You could buy {numMacs} Big Macs in {this.props.randCountryInfo.country} with {this.props.inMoney}!</div>
+				<div>You could buy {numMacs} Big {numMacs == 1 ? "Mac" : "Macs"} in {this.props.randCountryInfo.country} with {this.props.inMoney}!</div>
 				<div>Your {this.props.inMoney} is worth about {this.getRandMoney()} in {this.props.randCountryInfo.country}</div>
 			</div>			
 			)

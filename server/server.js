@@ -22,7 +22,7 @@ let parseIndexCSV = function(csv) {
 		if(arr[i].length <= 0) continue;
 
 		let row = arr[i].split(',');
-		let country = row[0];
+		let country = addTheToCountry(row[0]);
 		let date = Date.parse(row[1]);
 		if(index[country] != undefined && index[country].date >= date) {
 			// if we already have parsed a row, and it's more recent than the current value, quit out
@@ -41,15 +41,36 @@ let parseIndexCSV = function(csv) {
 
 let port = process.env.PORT || 4000;
 
+/*
+* Starts the server
+*/
 let startListening = function() {
 	let listener = app.listen(port);
-	console.log("Listening on localhost:" + port);
+	console.log("Listening on port:" + port);
 
 	process.on('SIGINT', function(){
 		console.log("Shutting down");
 	  	listener.close(); //make sure to close port
 		process.exit(0);
 	});
+}
+
+/*
+* If the country name should start with "The", adds "The"
+* Otherwise, returns passed in name
+* @param countryName - The name of the country
+* @returns The name of the country for display, possibly with "The" prepended
+*/
+let addTheToCountry = function(countryName){
+	if(countriesWithThe[countryName]) return "The " + countryName;
+	return countryName;
+}
+
+//List of countries in the table that should be displayed as "The ..."
+const countriesWithThe = {
+	"United States": true,
+	"Phillipines": true,
+	"Netherlands": true
 }
 
 let countryIndex = {};
@@ -64,6 +85,8 @@ fetch("https://raw.githubusercontent.com/zelima/big-mac-index/master/data/big-ma
 
 app.use(express.static(path.join(__dirname, "../client/public")));
 
+
+// Endpoints
 app.get('/bundle.js',
  browserify('./client/main.js', {
     transform: [ [ require("babelify"), { presets: ["es2015", "react"] } ] ]
@@ -88,7 +111,8 @@ app.get('/myCountry',
 		return fetch(`https://ipvigilante.com/json/${ip}`,options)
 		.then((data) => data.json())
 		.then(data => {
-			res.send(data.data);
+			let countryName = addTheToCountry(data.data.country_name);
+			res.send({data: countryName});
 		})
 		.catch(err => console.log("Error: ", err))
 	})

@@ -1,6 +1,6 @@
 import React from 'react';
 import LoadingComp from './loading.js';
-import LocalInfo from './localInfo.js';
+import CountryPanel from './countryPanel.js';
 import { getCountry, getIndex } from '../models/getCountryInfo.js';
 
 export default class App extends React.Component { 
@@ -78,8 +78,8 @@ export default class App extends React.Component {
 		return <div>
 					<h1>You are in {this.state.myCountry}</h1>
 					{this.moneyField()}
-					<LocalInfo inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)}/>
-					<LocalInfo inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)} randCountryInfo={this.getCountryInfo(this.state.randCountry)}/>
+					<CountryPanel inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)}/>
+					<CountryPanel inMoney={this.state.inMoney} myCountryInfo={this.getCountryInfo(this.state.myCountry)} randCountryInfo={this.getCountryInfo(this.state.randCountry)}/>
 			   </div>
 	}
 }
