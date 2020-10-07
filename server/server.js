@@ -3,15 +3,9 @@ let path = require('path');
 let app = express();
 let browserify = require('browserify-middleware');
 let fetch = require('node-fetch');
-let indexBuilder = require('./indexBuilder.js');
-
-
-//Helper Functions
+const indexBuilder = require('./indexBuilder.js');
 
 let countryIndex = {};
-
-
-
 let port = process.env.PORT || 4000;
 
 /*
