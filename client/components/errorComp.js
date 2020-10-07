@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+* Component to display if we encounter an error setting up the application
+*/
 export default class ErrorComp extends React.Component {
 
 	constructor(props) {

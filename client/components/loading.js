@@ -1,6 +1,8 @@
 import React from 'react';
-//import loadGif from '../public/assets/burgerLoad.gif';
 
+/**
+* Component to display while the app is loading information
+*/
 export default class LoadingComp extends React.Component {
 
 	constructor(props) {
