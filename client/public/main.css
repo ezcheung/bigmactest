@@ -30,7 +30,7 @@ body{
     margin-right: auto;
     border-radius: 10px;
     margin-bottom: 10px;
-    background-color: white;
+    background-color: #fffae3;
 }
 
 .third:hover{
@@ -53,7 +53,6 @@ body{
 }
 
 #loading{
-	/*text-align: center;*/
 	font-size:2em;
 	margin-top: 10%;
 	animation-duration: 1.5s;
@@ -63,6 +62,6 @@ body{
 
 @keyframes slideFade {
 	0%   {opacity: 0%; margin-left: 100%;}
-  	50%  {opacity:100%; margin-left:40%;}
+  	50%  {opacity:100%; margin-left:45%;}
   	100% {opacity: 0%; margin-right: 100%;}
 }
